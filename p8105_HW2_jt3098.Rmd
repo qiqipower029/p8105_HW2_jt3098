@@ -1,0 +1,11 @@
+---
+title: "p8105_HW2_jt3098"
+author: "Jieqi Tu (jt3098)"
+date: "9/29/2018"
+output: Github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
