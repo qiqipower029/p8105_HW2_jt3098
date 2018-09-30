@@ -34,7 +34,15 @@ This dataset is called subway_data. The variable it contains are below:
 * entrance_type: the type of the entrance
 * ada: is there ada compliance in this station
 
+Cleaning steps:
+
+* Import csv file from the data folder
+* Use janitor::clean_names() function to convert all upper-case letters to lower-case.
+* Use select function to carefully choose columns required to show up in the dataset
+* Use ifelse() function to convert entry variable from character to logical.
+
 ```{r distinctstations}
 distinction = distinct(subway_data, station_name, line)
 ```
+
 
