@@ -17,6 +17,24 @@ library(ggplot2)
 subway_data = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
   janitor::clean_names() %>%
   select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada)
-  subway_data$entry = ifelse(subway_data$entry == "YES", TRUE, FALSE)
+
+subway_data$entry = ifelse(subway_data$entry == "YES", TRUE, FALSE)
+
+```
+
+This dataset is called subway_data. The variable it contains are below:
+
+* line: the avenue or road in NYC that the station located in
+* station_name: the names of all stations
+* station_latitude: the latitude value for this station
+* station_longitude: the longitude value for this station
+* route1:route11: the train that stops at this station
+* entry: whether or not there is entry for this station
+* vending: whether or not there is vending for this station
+* entrance_type: the type of the entrance
+* ada: is there ada compliance in this station
+
+```{r distinctstations}
+distinction = distinct(subway_data, station_name, line)
 ```
 
