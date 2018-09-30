@@ -2,10 +2,21 @@
 title: "p8105_HW2_jt3098"
 author: "Jieqi Tu (jt3098)"
 date: "9/29/2018"
-output: Github_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(dplyr)
+library(ggplot2)
 ```
+
+## Problem 1
+```{r importing data}
+subway_data = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
+  janitor::clean_names() %>%
+  select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada)
+  subway_data$entry = ifelse(subway_data$entry == "YES", TRUE, FALSE)
+```
+
