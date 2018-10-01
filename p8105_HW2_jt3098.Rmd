@@ -41,8 +41,24 @@ Cleaning steps:
 * Use select function to carefully choose columns required to show up in the dataset
 * Use ifelse() function to convert entry variable from character to logical.
 
-```{r distinctstations}
+Dimension: rows: `r nrow(subway_data)`; columns: `r ncol(subway_data)`.
+This dataset is not tidy, because columns in this dataset are not only variables. Also, some of the columns need to be combinded or collapsed.
+
+```{r questions}
 distinction = distinct(subway_data, station_name, line)
+subway_data %>%  
+  filter(ada == TRUE) %>%
+  distinct(line, station_name) %>%
+  nrow()
+n_entrance_novending = filter(subway_data, entry == "TRUE", vending == "NO") %>%
+  distinct(line, station_name) %>%
+  nrow()
+n_exit_nonvending = filter(subway_data, entry == "FALSE", vending == "NO") %>%
+  distinct(line, station_name) %>%
+  nrow()
 ```
 
+* There are `r nrow(distinction)` distinct stations in NYC.
+* There are 84 stations are ADA compliant.
+* The proportion of non-vending entrance is `r n_entrance_novending / nrow(distinction)`; the proportion of non-vending exit is `r n_exit_nonvending / nrow(distinction)`
 
