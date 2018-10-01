@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(haven)
 ```
 
 ## Problem 1
@@ -41,8 +42,8 @@ Cleaning steps:
 * Use select function to carefully choose columns required to show up in the dataset
 * Use ifelse() function to convert entry variable from character to logical.
 
-Dimension: rows: `r nrow(subway_data)`; columns: `r ncol(subway_data)`.
-This dataset is not tidy, because columns in this dataset are not only variables. Also, some of the columns need to be combinded or collapsed.
+* Dimension: rows: `r nrow(subway_data)`; columns: `r ncol(subway_data)`.
+* This dataset is not tidy, because columns in this dataset are not only variables. Also, some of the columns need to be combinded or collapsed.
 
 ```{r questions}
 distinction = distinct(subway_data, station_name, line)
@@ -63,6 +64,16 @@ n_exit_nonvending = filter(subway_data, entry == "FALSE", vending == "NO") %>%
 * The proportion of non-vending entrance is `r n_entrance_novending / nrow(distinction)`; the proportion of non-vending exit is `r n_exit_nonvending / nrow(distinction)`
 
 ```{r reformatting}
-
+subway_data_tidy = gather(subway_data, key = "route_number", value = "route_name", route1:route11)
 ```
 
+```{r questions2}
+A_stations = filter(subway_data_tidy, route_name == "A") %>%
+  distinct(line, station_name) %>%
+  nrow()
+A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
+  distinct(line, station_name) %>%
+  nrow()
+```
+
+* In NYC, `r A_stations` distinct stations serve A train, `r A_compliant` of which are ADA compliant.
