@@ -32,7 +32,7 @@ This dataset is called subway_data. The variable it contains are below:
 * entry: whether or not there is entry for this station
 * vending: whether or not there is vending for this station
 * entrance_type: the type of the entrance
-* ada: is there ada compliance in this station
+* ada:  whether or not there is ada compliance in this station
 
 Cleaning steps:
 
@@ -61,4 +61,8 @@ n_exit_nonvending = filter(subway_data, entry == "FALSE", vending == "NO") %>%
 * There are `r nrow(distinction)` distinct stations in NYC.
 * There are 84 stations are ADA compliant.
 * The proportion of non-vending entrance is `r n_entrance_novending / nrow(distinction)`; the proportion of non-vending exit is `r n_exit_nonvending / nrow(distinction)`
+
+```{r reformatting}
+
+```
 
