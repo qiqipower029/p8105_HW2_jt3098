@@ -119,8 +119,15 @@ About these data:
 * The median number for sports balls is `r waterwheel_data %>% filter(year == "2017") %>% summarize(median(sports_balls))`.
 
 ## Problem 3
-```{r}
+```{r importing data for Problem 3}
+devtools::install_github("p8105/p8105.datasets")
+library(p8105.datasets)
+data(brfss_smart2010, package = "p8105.datasets")
 
+brfss_smart2010 = 
+  brfss_smart2010 %>%
+  janitor::clean_names()
+  
 ```
 
 
