@@ -84,8 +84,14 @@ A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
 ```{r importing data}
 waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", range = "A2:N256") %>%
   janitor::clean_names() %>%
-  filter(!is.na(dumpster))
+  filter(!is.na(dumpster)) %>%
+  mutate(sports_balls = round(sports_balls, digits = 0)) %>%
+  mutate(sports_balls = as.integer(sports_balls))
+```
 
+```{r precipitation manipulation}
+prcp_2016 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 4, range = "A2:B14")
+prcp_2017 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 3, range = "A2:B14")
 
 ```
 
