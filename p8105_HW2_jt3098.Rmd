@@ -81,7 +81,7 @@ A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
 
 ## Problem 2
 
-```{r importing data}
+```{r importing waterwheel data}
 waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", range = "A2:N256") %>%
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>%
@@ -109,4 +109,12 @@ prcp_data =
   prcp_data %>%
   mutate(month = month.name[month])
 ```
+
+About these data:
+
+* waterwheel_data is a dataset exported from HealthyHarborWaterWheelTotals.xlsx sheet 1. It contains many variables to categorize the types of trash that they collected on a specific date. For example, one of the key variable in waterwheel_data is sports balls. The mean value for sports balls in this dataset is `r mean(waterwheel_data$sports_balls)`, and the standard deviation of sports balls is `r sd(waterwheel_data$sports_balls)`. 
+* There are `r nrow(waterwheel_data)` records in waterwheel_data, which implies the times that water wheels were used.
+* In prcp_data, all the data are from sheet 3 and 4 of HealthyHarborWaterWheelTotals.xlsx. the precipitation was collected in `r nrow(prcp_data)` months. The number of months recorded in 2016 is `r nrow(prcp_2016)` and the number of months recorded in 2017 is `r nrow(prcp_2017)`, respectively.
+* The tatol precipitation in 2017 is `r sum(prcp_2017$total)`.
+* The median number for sports balls is `r (waterwheel_data %>% filter(year == "2017") %>% summarize(median(sports_balls)`.
 
