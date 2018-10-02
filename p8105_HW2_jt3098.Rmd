@@ -11,6 +11,7 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(haven)
+library(readxl)
 ```
 
 ## Problem 1
@@ -77,3 +78,14 @@ A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
 ```
 
 * In NYC, `r A_stations` distinct stations serve A train, `r A_compliant` of which are ADA compliant.
+
+## Problem 2
+
+```{r importing data}
+waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", range = "A2:N256") %>%
+  janitor::clean_names() %>%
+  filter(!is.na(dumpster))
+
+
+```
+
