@@ -91,7 +91,22 @@ waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx",
 
 ```{r precipitation manipulation}
 prcp_2016 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 4, range = "A2:B14")
-prcp_2017 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 3, range = "A2:B14")
+prcp_2017 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 3, range = "A2:B10")
 
+prcp_2016 = 
+  prcp_2016 %>%
+  janitor::clean_names() %>%
+  mutate(year = 2016)
+
+prcp_2017 = 
+  prcp_2017 %>%
+  janitor::clean_names() %>%
+  mutate(year = 2017)
+
+prcp_data = full_join(prcp_2016, prcp_2017)
+
+prcp_data = 
+  prcp_data %>%
+  mutate(month = month.name[month])
 ```
 
