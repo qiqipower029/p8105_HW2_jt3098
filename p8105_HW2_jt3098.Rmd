@@ -16,11 +16,12 @@ library(readxl)
 
 ## Problem 1
 ```{r importing data}
+# Import csv data
 subway_data = read_csv("./data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv") %>%
-  janitor::clean_names() %>%
-  select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada)
+  janitor::clean_names() %>% # Upper-case --> Lower-case
+  select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada) # Retain variable needed to analyze
 
-subway_data$entry = ifelse(subway_data$entry == "YES", TRUE, FALSE)
+subway_data$entry = ifelse(subway_data$entry == "YES", TRUE, FALSE) # Make entry variable from character to logical data
 
 ```
 
@@ -47,17 +48,17 @@ Cleaning steps:
 * This dataset is not tidy, because columns in this dataset are not only variables. Also, some of the columns need to be combinded or collapsed.
 
 ```{r questions}
-distinction = distinct(subway_data, station_name, line)
+distinction = distinct(subway_data, station_name, line) # Count the total number of stations
 subway_data %>%  
   filter(ada == TRUE) %>%
   distinct(line, station_name) %>%
-  nrow()
+  nrow() # Count the total number of stations with ADA compliance
 n_entrance_novending = filter(subway_data, entry == "TRUE", vending == "NO") %>%
   distinct(line, station_name) %>%
-  nrow()
+  nrow() # Count the total number of entrance without vending
 n_exit_nonvending = filter(subway_data, entry == "FALSE", vending == "NO") %>%
   distinct(line, station_name) %>%
-  nrow()
+  nrow() # Count the total number of Exit-only without vending
 ```
 
 * There are `r nrow(distinction)` distinct stations in NYC.
@@ -71,10 +72,10 @@ subway_data_tidy = gather(subway_data, key = "route_number", value = "route_name
 ```{r questions2}
 A_stations = filter(subway_data_tidy, route_name == "A") %>%
   distinct(line, station_name) %>%
-  nrow()
+  nrow() # Total number of stations that serve A
 A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
   distinct(line, station_name) %>%
-  nrow()
+  nrow() # Total number of stations that serve A and are ADA compliant
 ```
 
 * In NYC, `r A_stations` distinct stations serve A train, `r A_compliant` of which are ADA compliant.
@@ -82,29 +83,33 @@ A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
 ## Problem 2
 
 ```{r importing waterwheel data}
+# Import data from excel file
 waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", range = "A2:N256") %>%
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>%
   mutate(sports_balls = round(sports_balls, digits = 0)) %>%
-  mutate(sports_balls = as.integer(sports_balls))
+  mutate(sports_balls = as.integer(sports_balls)) # Change column type to integer
 ```
 
 ```{r precipitation manipulation}
+# Importing data from exel file
 prcp_2016 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 4, range = "A2:B14")
 prcp_2017 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 3, range = "A2:B10")
 
 prcp_2016 = 
   prcp_2016 %>%
   janitor::clean_names() %>%
-  mutate(year = 2016)
+  mutate(year = 2016) # Add a new variable "year"
 
 prcp_2017 = 
   prcp_2017 %>%
   janitor::clean_names() %>%
-  mutate(year = 2017)
+  mutate(year = 2017) # Add a new variable "year"
 
+# Join dataset and stored in a new dataset
 prcp_data = full_join(prcp_2016, prcp_2017)
 
+# Change variable type by using month.name[] function
 prcp_data = 
   prcp_data %>%
   mutate(month = month.name[month])
@@ -120,6 +125,7 @@ About these data:
 
 ## Problem 3
 ```{r importing data for Problem 3}
+# Import data from github website
 devtools::install_github("p8105/p8105.datasets")
 library(p8105.datasets)
 data(brfss_smart2010, package = "p8105.datasets")
@@ -127,7 +133,6 @@ data(brfss_smart2010, package = "p8105.datasets")
 brfss_smart2010 = 
   brfss_smart2010 %>%
   janitor::clean_names()
-  
 ```
 
 
