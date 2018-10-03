@@ -56,14 +56,14 @@ subway_data %>%
 n_entrance_novending = filter(subway_data, entry == "TRUE", vending == "NO") %>%
   distinct(line, station_name) %>%
   nrow() # Count the total number of entrance without vending
-n_exit_nonvending = filter(subway_data, entry == "FALSE", vending == "NO") %>%
+n_nonvending = filter(subway_data, vending == "NO") %>%
   distinct(line, station_name) %>%
   nrow() # Count the total number of Exit-only without vending
 ```
 
 * There are `r nrow(distinction)` distinct stations in NYC.
 * There are 84 stations are ADA compliant.
-* The proportion of non-vending entrance is `r n_entrance_novending / nrow(distinction)`; the proportion of non-vending exit is `r n_exit_nonvending / nrow(distinction)`
+* The proportion of non-vending entrance is `r n_entrance_novending / n_nonvending`
 
 ```{r reformatting}
 subway_data_tidy = gather(subway_data, key = "route_number", value = "route_name", route1:route11)
@@ -141,12 +141,41 @@ brfss_overallhealth =
   brfss_smart2010  %>%
   filter(topic == "Overall Health") %>% # This dataset only contains data with topic "Overal Health"
   select(-class, -topic, -sample_size, -question, -(confidence_limit_low:geo_location)) %>%
-  spread (key = response, value = data_value) %>% # Make the value of response be seperate variables
+  spread(key = response, value = data_value) %>% # Make the value of response be seperate variables
   janitor::clean_names() %>%
   mutate(prop_nice = excellent + very_good) # Add a new variable to show the sum of excellent and very good proportion
 ```
 
 ```{r questions 3}
+# Calculate the number of locations
+distinct_location = distinct(brfss_overallhealth, locationdesc) %>%
+  nrow()
+
+# Calculate the number of states
+distinct_states = distinct(brfss_overallhealth, locationabbr) %>%
+  nrow()
+
+# Count the most observed state
+count_(brfss_overallhealth, 'locationabbr', sort = TRUE)
+
+# Calculate the median value for excellent in 2002
+brfss_2002 = 
+  brfss_overallhealth %>%
+  filter(year == "2002")
+median(brfss_2002$excellent, na.rm = TRUE)
+```
+
+From this dataset, we could know that:
+
+* There are `r distinct_location` different locations are included.
+* There are `r distinct_states` states are included, so every state is represented. The most observed state is NJ.
+* The median value for excellent response in 2002 is `r median(brfss_2002$excellent, na.rm = TRUE)`.
+
+```{r Making plots}
+
+```
+
+```{r}
 
 ```
 
