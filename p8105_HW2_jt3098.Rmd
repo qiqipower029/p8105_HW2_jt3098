@@ -14,6 +14,14 @@ library(haven)
 library(readxl)
 ```
 
+```{r figure setting}
+knitr::opts_chunk$set(
+  fig.width = 6,
+  fig.asp = .6,
+  out.width = "90%"
+)
+```
+
 ## Problem 1
 ```{r importing data}
 # Import csv data
@@ -172,10 +180,29 @@ From this dataset, we could know that:
 * The median value for excellent response in 2002 is `r median(brfss_2002$excellent, na.rm = TRUE)`.
 
 ```{r Making plots}
+# make a histogram for "Excellent" response in 2002
+ggplot(brfss_2002, aes(x = excellent), alpha = .5) + 
+  geom_histogram() +
+  theme_bw()
 
+# Retain data from only New York County and Queens County
+excellent_N = 
+  brfss_overallhealth %>%
+  filter(locationdesc == "NY - New York County")
+excellent_Q = 
+  brfss_overallhealth %>%
+  filter(locationdesc == "NY - Queens County")
+excellent_NQ = rbind(excellent_N, excellent_Q)
+  
+# make a scatterpoint graph to show the proportion of "Excellent" in New York County and Queens County
+ggplot(excellent_NQ, aes(x = year, y = excellent, color = locationdesc)) +
+  geom_point() +
+  labs(
+    x = "Year",
+    y = "Proportion of Excellent Response",
+    title = "Proportion of Excellent Response in 2002 - 2010"
+  ) +
+  theme_bw()
 ```
 
-```{r}
-
-```
 
