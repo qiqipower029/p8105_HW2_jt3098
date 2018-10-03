@@ -129,10 +129,24 @@ About these data:
 devtools::install_github("p8105/p8105.datasets")
 library(p8105.datasets)
 data(brfss_smart2010, package = "p8105.datasets")
-
-brfss_smart2010 = 
-  brfss_smart2010 %>%
-  janitor::clean_names()
 ```
 
+
+```{r BRFSS data manipulation}
+brfss_smart2010 = 
+  brfss_smart2010 %>%
+  janitor::clean_names() # The whole dataset of BRFSS file
+
+brfss_overallhealth = 
+  brfss_smart2010  %>%
+  filter(topic == "Overall Health") %>% # This dataset only contains data with topic "Overal Health"
+  select(-class, -topic, -sample_size, -question, -(confidence_limit_low:geo_location)) %>%
+  spread (key = response, value = data_value) %>% # Make the value of response be seperate variables
+  janitor::clean_names() %>%
+  mutate(prop_nice = excellent + very_good) # Add a new variable to show the sum of excellent and very good proportion
+```
+
+```{r questions 3}
+
+```
 
