@@ -62,10 +62,8 @@ subway_data %>%
   distinct(line, station_name) %>%
   nrow() # Count the total number of stations with ADA compliance
 n_entrance_novending = filter(subway_data, entry == "TRUE", vending == "NO") %>%
-  distinct(line, station_name) %>%
   nrow() # Count the total number of entrance without vending
 n_nonvending = filter(subway_data, vending == "NO") %>%
-  distinct(line, station_name) %>%
   nrow() # Count the total number of Exit-only without vending
 ```
 
@@ -129,7 +127,7 @@ About these data:
 * There are `r nrow(waterwheel_data)` records in waterwheel_data, which implies the times that water wheels were used.
 * In prcp_data, all the data are from sheet 3 and 4 of HealthyHarborWaterWheelTotals.xlsx. the precipitation was collected in `r nrow(prcp_data)` months. The number of months recorded in 2016 is `r nrow(prcp_2016)` and the number of months recorded in 2017 is `r nrow(prcp_2017)`, respectively.
 * The tatol precipitation in 2017 is `r sum(prcp_2017$total)`.
-* The median number for sports balls is `r waterwheel_data %>% filter(year == "2017") %>% summarize(median(sports_balls))`.
+* The median number for sports balls is `r waterwheel_data %>% filter(year == "2016") %>% summarize(median(sports_balls))`.
 
 ## Problem 3
 ```{r importing data for Problem 3}
