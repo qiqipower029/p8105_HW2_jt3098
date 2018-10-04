@@ -90,7 +90,7 @@ A_compliant = filter(subway_data_tidy, route_name == "A", ada == TRUE) %>%
 
 ```{r importing waterwheel data}
 # Import data from excel file
-waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", range = "A2:N256") %>%
+waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals2018.xlsx", range = "A2:N336") %>%
   janitor::clean_names() %>%
   filter(!is.na(dumpster)) %>%
   mutate(sports_balls = round(sports_balls, digits = 0)) %>%
@@ -99,8 +99,8 @@ waterwheel_data = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx",
 
 ```{r precipitation manipulation}
 # Importing data from exel file
-prcp_2016 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 4, range = "A2:B14")
-prcp_2017 = read_excel(path = "./data/HealthyHarborWaterWheelTotals.xlsx", sheet = 3, range = "A2:B10")
+prcp_2016 = read_excel(path = "./data/HealthyHarborWaterWheelTotals2018.xlsx", sheet = 5, range = "A2:B14")
+prcp_2017 = read_excel(path = "./data/HealthyHarborWaterWheelTotals2018.xlsx", sheet = 4, range = "A2:B14")
 
 prcp_2016 = 
   prcp_2016 %>%
